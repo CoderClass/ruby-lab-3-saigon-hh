@@ -43,3 +43,5 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 group :development do
   gem 'guard-rspec', require: false
 end
+
+gem 'simplecov', :require => false, :group => :test
