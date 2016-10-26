@@ -17,12 +17,30 @@ RSpec.describe Product, type: :model do
     end
 
     it "returns [a,b,c] after I create 3 products c, b, a" do
-      	product1 = FactoryGirl.create(:product, name: 'b')
-	  	product2 = FactoryGirl.create(:product, name: 'c')
-	  	product3 = FactoryGirl.create(:product, name: 'a')
+      product1 = FactoryGirl.create(:product, name: 'b')
+      product2 = FactoryGirl.create(:product, name: 'c')
+      product3 = FactoryGirl.create(:product, name: 'a')
 
-	  	expect(Product.alphabetical).to eq [product3, product1, product2]
-
+      expect(Product.alphabetical).to eq [product3, product1, product2]
     end
   end
+
+  describe ".discount_amount" do
+    it "Hats that cost > 100,000 VND" do
+      product = FactoryGirl.create(:product, price_vnd: 110000)
+      expect(product.discount_amount).to eq 90000 #product.price_vnd - (110000*21/100).round *10000 / 10000
+    end
+
+    it "Hats that cost > 200,000 VND" do
+      product = FactoryGirl.create(:product, price_vnd: 210000)
+      expect(product.discount_amount).to eq 140000 #product.price_vnd - (210000*31/100).round *10000 / 10000
+    end
+
+    it "Hats that cost > 800,000 VND" do
+      product = FactoryGirl.create(:product, price_vnd: 810000)
+      expect(product.discount_amount).to eq 480000 #product.price_vnd - (810000*41/100).round *10000 / 10000
+    end
+
+  end
+
 end
